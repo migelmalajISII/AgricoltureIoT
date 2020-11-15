@@ -50,3 +50,9 @@ nav.background {
     background-color: deepskyblue;
     border-radius: .25rem 0 0 .25rem;
 }
+
+@media (max-width: 768px) {
+    .disable-left {
+        left: 0;
+    }
+}

@@ -1,6 +1,6 @@
 <?php 
 include("header.php");
 include("navbar.php");
-include("content.php");
+include("template/registrazione.php");
 include("footer.php"); 
 ?>

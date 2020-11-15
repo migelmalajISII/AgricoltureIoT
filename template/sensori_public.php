@@ -1,4 +1,4 @@
-<div class="row  text-dark">
+<div class="row text-dark">
     <div class="col-lg-4 mt-3">
         <div class="riquadroSensori">
             <h5 class="card-title">Sensore 1</h5>
