@@ -11,7 +11,7 @@
                 <a class="nav-link" href="./admin.php">Administrator</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../registration.php">Registratione</a>
+                <a class="nav-link" href="../public/registration.php">Registratione</a>
             </li>
         </ul>
         <?php if(isset($_SESSION['islogged'])) { ?>

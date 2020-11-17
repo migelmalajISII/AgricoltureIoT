@@ -1,5 +1,5 @@
 <?php
 require("dal.php");
-
+?>
 
 

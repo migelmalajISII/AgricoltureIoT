@@ -7,3 +7,4 @@ if($check and $_SESSION['role']==='admin'){
 else{
     header('Location: ../');
 }
+?>

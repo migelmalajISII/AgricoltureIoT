@@ -51,6 +51,11 @@ nav.background {
     border-radius: .25rem 0 0 .25rem;
 }
 
+.confirm-registration {
+    text-align: center;
+    color: azure;
+}
+
 @media (max-width: 768px) {
     .disable-left {
         left: 0;

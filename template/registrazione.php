@@ -1,6 +1,6 @@
 <div class="row justify-content-center text-dark">
     <div class="py-4 col-md-6 bg-light">
-        <form method="POST" action="config/registration.php" class="needs-validation">
+        <form method="POST" action="../config/registration.php" class="needs-validation">
             <h2 class="text-center">Aggiungi un utente</h2>
             <div class="form-group col-md was-validated">
                 <label for="inputNUsername">Username</label>
