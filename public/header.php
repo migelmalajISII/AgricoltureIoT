@@ -1,12 +1,6 @@
 <?php 
 require("../config/public.php"); 
 session_start();
-if(isset($_SESSION['error'])){
-    if(intval($_SESSION['errorcode'])===1){
-        echo("<script>setTimeout(() => { window.alert('Accesso negato!');}, 100);</script>"); 
-    }
-    unset($_SESSION['error']);
-}
 ?>
 <!DOCTYPE html>
 <html lang="it">

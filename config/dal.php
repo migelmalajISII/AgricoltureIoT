@@ -17,14 +17,20 @@ function login($user){
     $mysqli=connectDB();
     $query="SELECT * FROM utenti WHERE username='$user'";
     $result = $mysqli->query($query);
-    $data = $result->fetch_array(MYSQLI_ASSOC); // single row
+    $data = $result->fetch_array(MYSQLI_ASSOC);
     $result->free_result();
     $mysqli->close();
     return $data;
 }
 
-function publicLoad(){
-
+function publicLoad($data){
+    $mysqli=connectDB();
+    $query="SELECT `idsensore`, ROUND(AVG(`temperatura_t`),2) AS TT, ROUND(AVG(`umidita_t`),2) AS UT, ROUND(AVG(`temperatura_a`),2) AS TA, ROUND(AVG(`umidita_a`),2) AS UA, ROUND(AVG(`indiceuv`),2) AS UV FROM `dati` WHERE `data` ='$data' GROUP BY `idsensore`";
+    $result=$mysqli->query($query);
+    $data = $result->fetch_all(MYSQLI_ASSOC);
+	$result->free_result();
+	$mysqli->close();
+	return $data;
 }
 
 function registration($user,$pass,$role){

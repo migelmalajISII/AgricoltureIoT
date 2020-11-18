@@ -20,8 +20,8 @@
         </form>
     </div>
     <?php } else { ?>
-        <ul class="navbar-nav mr-auto">
-        </ul>
+    <ul class="navbar-nav mr-auto">
+    </ul>
     <button type="button" id="dropdownMenu1" data-toggle="dropdown" class="btn btn-success dropdown-toggle">Login <span class="caret"></span></button>
     <div class="dropdown-menu dropdown-menu-right disable-left">
         <form class="px-4 py-3" method="POST" action="../config/login.php">
