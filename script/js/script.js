@@ -1,16 +1,20 @@
 function ShowColture() {
-    let currentState = $("#inputStato").val();
-    if (currentState > 2 && currentState < 7) {
-        $("#divColtura").removeClass("d-none");
-        $("#divStato").removeClass("col-md-12").addClass("col-md-6");
+    let currentState = document.getElementById("inputStato").value;
+    if (currentState > 1 && currentState < 7) {
+        document.getElementById("divColtura").classList.remove("d-none");
+        document.getElementById("divStato").classList.remove("col-md-12");
+        document.getElementById("divStato").classList.add("col-md-6");
+        document.getElementById("inputColtura").disabled = false;
     } else {
-        $("#divColtura").addClass("d-none");
-        $("#divStato").removeClass("col-md-6").addClass("col-md-12");
+        document.getElementById("divColtura").classList.add("d-none");
+        document.getElementById("divStato").classList.remove("col-md-6");
+        document.getElementById("divStato").classList.add("col-md-12");
+        document.getElementById("inputColtura").disabled = true;
     }
 }
 
-function ShowAlert(mess) {
-    window.alert(mess);
+function ActivateOption(num, nameslc) {
+    document.getElementById(nameslc).value = num;
 }
 
 function ShowPassword() {
@@ -42,5 +46,33 @@ function CheckPassword() {
     if (value == '' || value1 == '') {
         $("#inputCPassword").removeClass("is-valid is-invalid");
         $("#bttSend").prop("disabled", false);
+    }
+}
+
+function sensoreScroll() {
+    var maxRows = 6;
+    var table = document.getElementById('tblSensore');
+    var wrapper = table.parentNode;
+    var rowsInTable = table.rows.length;
+    var height = 0;
+    if (rowsInTable > maxRows) {
+        for (var i = 0; i < maxRows; i++) {
+            height += table.rows[i].clientHeight;
+        }
+        wrapper.style.height = height + "px";
+    }
+}
+
+function terrenoScroll() {
+    var maxRows = 6;
+    var table = document.getElementById('tblTerreno');
+    var wrapper = table.parentNode;
+    var rowsInTable = table.rows.length;
+    var height = 0;
+    if (rowsInTable > maxRows) {
+        for (var i = 0; i < maxRows; i++) {
+            height += table.rows[i].clientHeight;
+        }
+        wrapper.style.height = height + "px";
     }
 }

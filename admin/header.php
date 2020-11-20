@@ -1,3 +1,7 @@
+<?php 
+require("../config/public.php");
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 
