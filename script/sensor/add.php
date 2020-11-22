@@ -5,9 +5,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $md=htmlentities($_POST["inputModello"]);
     $lt=isset($_POST["inputLatitudine"])?htmlentities($_POST["inputLatitudine"]):"NULL";
     $lg=isset($_POST["inputLongitudine"])?htmlentities($_POST["inputLongitudine"]):"NULL";
-    $idtr=htmlentities($_POST["inputTerreno"])!=-1?htmlentities($_POST["inputTerreno"]):"NULL";
     $txt=isset($_POST["txtnote"])?htmlentities($_POST["txtnote"]):"NULL";
-    addSensor($mr,$md,$lt,$lg,$idtr,$txt);
+    addSensor($mr,$md,$lt,$lg,$txt);
 }
 header('Location: ../../admin/admin.php');
 ?>

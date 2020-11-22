@@ -11,6 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include("../public/footer.php");
 }
 else{
-    header("Location:../");
+    if($_SERVER['REQUEST_METHOD'] === 'GET' and isset($_GET['code']) and isset($_GET['user'])){
+        if(htmlentities($_GET['code'])==='554'){
+            require("./dal.php");
+            $value=htmlentities($_GET['user']);
+            echo existUsername($value);
+        }else{
+            header("Location:../");
+        }
+    }else{
+        header("Location:../");
+    }
 }
 ?>

@@ -56,11 +56,6 @@ nav.background {
     color: azure;
 }
 
-.table {
-    border-collapse: collapse;
-    width: 25%;
-}
-
 .scrollingTable {
     width: min-content;
     overflow-y: auto;

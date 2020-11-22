@@ -1,12 +1,9 @@
 <?php
+require('config.php');
 
 function connectDB(){
-    $hostname = "localhost";
-    $username = "public";
-    $password = "";
-    $dbname = "agriculture_iot";
-
-    $conn = mysqli_connect($hostname, $username, $password, $dbname);
+    $cfg = get_db_config();
+    $conn = mysqli_connect($cfg['hostname'], $cfg['username'], $cfg['password'], $cfg['dbname']);
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
@@ -23,20 +20,45 @@ function login($user){
     return $data;
 }
 
+function existUsername($user){
+    $mysqli=connectDB();
+    $query="SELECT `id` FROM `utenti` WHERE `username`='$user'";
+    $result = $mysqli->query($query);
+    $value = is_null($result->fetch_object())? 'true': 'false';
+    $result->free_result();
+    $mysqli->close();
+    return $value;
+}
+
 function registration($user,$pass,$role){
     $mysqli=connectDB();
     $pass_hash=password_hash($pass,PASSWORD_DEFAULT);
     $token=generate_string();
     $token_hash=password_hash($token,PASSWORD_DEFAULT);
-    $query="INSERT INTO `utenti` (`id`, `username`, `password`, `token`, `ruolo`) VALUES (NULL, '$user', '$pass_hash', '$token_hash', '$role');";
+    $query="INSERT INTO `utenti` (`id`, `username`, `password`, `token`, `ruolo`) VALUES (NULL, '$user', '$pass_hash', '$token_hash', '$role')";
     $mysqli->query($query);
     $mysqli->close();
     return $token;
 }
 
+function newToken($id,$user){
+    $mysqli=connectDB();
+    $token=generate_string();
+    $token_hash=password_hash($token,PASSWORD_DEFAULT);
+    $query= "UPDATE `utenti` SET `token`='$token_hash' WHERE `id`= $id AND `username`='$user'";
+    if($mysqli->query($query)==1){
+        $mysqli->close();
+        return $token;
+    }
+    else{
+        $mysqli->close();
+        return "false";
+    }
+}
+
 function generate_string(){
     $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $strength = 8;
+    $strength = 12;
     $permitted_chars_length = strlen($permitted_chars);
     $random_string = '';
     for($i = 0; $i < $strength; $i++) {
@@ -84,70 +106,27 @@ function deleteSensor($id){
     return $result;
 }
 
-function addSensor($mr,$md,$lt,$lg,$idtr,$txt){
+function addSensor($mr,$md,$lt,$lg,$txt){
     $mysqli=connectDB();
-    $query="INSERT INTO `sensori`(`marca`, `modello`, `latitudine`, `longitudine`, `note`, `idterreno`) VALUES ('$mr','$md','$lt','$lg','$txt',$idtr)";
+    $query="INSERT INTO `sensori`(`marca`, `modello`, `latitudine`, `longitudine`, `note`) VALUES ('$mr','$md','$lt','$lg','$txt')";
     $mysqli->query($query);
     $mysqli->close();
 }
 
-function updateSensor($id,$mr,$md,$lt,$lg,$idtr,$txt){
+function updateSensor($id,$mr,$md,$lt,$lg,$txt){
     $mysqli=connectDB();
-    $query="UPDATE `sensori` SET `marca`='$mr',`modello`='$md',`latitudine`='$lt',`longitudine`='$lg',`note`='$txt',`idterreno`=$idtr WHERE `idsensore`=$id";
+    $query="UPDATE `sensori` SET `marca`='$mr',`modello`='$md',`latitudine`='$lt',`longitudine`='$lg',`note`='$txt' WHERE `idsensore`=$id";
     $mysqli->query($query);
     $mysqli->close();
 }
 
-function allTerrain(){
+function addDato($tt,$th,$at,$ah,$uv,$idsensor){
+    $dt=date("Y-m-d");
+    $hr=date("H:i:s");
     $mysqli=connectDB();
-    $query="SELECT * FROM `terreni`";
-    $result=$mysqli->query($query);
-    $data = $result->fetch_all(MYSQLI_ASSOC);
-    $result->free_result();
-    $mysqli->close();
-    return $data;
-}
-
-function getTerrainByID($id){
-    $mysqli=connectDB();
-    $query="SELECT * FROM `terreni` WHERE `idterreno`=$id";
-    $result=$mysqli->query($query);
-    $data = $result->fetch_array(MYSQLI_ASSOC);
-    $result->free_result();
-    $mysqli->close();
-    return $data;
-}
-
-function addTerrain($lt,$lg,$st,$cl){
-    $mysqli=connectDB();
-    $query="INSERT INTO `terreni`(`latitudine`, `longitudine`, `statolavorazione`, `coltura`) VALUES ('$lt','$lg','$st','$cl')";
-    echo "<script>console.log($query)</script>";
+    $query="INSERT INTO `dati`(`temperatura_t`, `umidita_t`, `temperatura_a`, `umidita_a`, `indiceuv`, `data`, `ora`, `idsensore`) VALUES ('$tt','$th','$at','$ah','$uv','$dt','$hr',$idsensor)";
     $mysqli->query($query);
     $mysqli->close();
 }
 
-function updateTerrain($id,$lt,$lg,$st,$cl){
-    $mysqli=connectDB();
-    $query="UPDATE `terreni` SET `latitudine`='$lt',longitudine`='$lg',`statolavorazione`='$st',coltura`='$cl' WHERE `idterreno`=$id";
-    $mysqli->query($query);
-    $mysqli->close();
-}
-
-function deleteTerrain($id){
-    $mysqli=connectDB();
-    $query="DELETE FROM `terreni` WHERE `idterreno`=$id";
-    $result=$mysqli->query($query);
-    $mysqli->close();
-    return $result;
-}
-
-function getTerrainToList(){
-    $mysqli=connectDB();
-    $query= "SELECT `idterreno`, CONCAT(`idterreno`,\"  -  Latitudine: \",`latitudine`,\" , Longitudine: \",`longitudine`) AS nameterrain FROM `terreni`";
-    $result=$mysqli->query($query);
-    $data = $result->fetch_all(MYSQLI_ASSOC);
-    $result->free_result();
-    $mysqli->close();
-    return $data;
-}
 ?>
