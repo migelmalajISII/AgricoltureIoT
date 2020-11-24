@@ -5,8 +5,8 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 ?>
 <div class="mt-3">
     <h3 class="text-center">Dati medi del giorno
-        <form  class=" col-3 d-inline-block" method="GET" action='../public/index.php'>
-            <input type="date" class="form-control text-right" name="dtpicker" id="dtpicker" value="<?=$dataa?>" onchange="submit()">
+        <form  class=" col-lg-2 d-inline-block" method="GET" action='../public/index.php'>
+            <input type="date" class="form-control text-center" name="dtpicker" id="dtpicker" value="<?=$dataa?>" onchange="submit()">
         </form>
     </h3>
 </div>

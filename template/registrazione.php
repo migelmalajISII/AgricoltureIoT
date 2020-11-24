@@ -1,11 +1,13 @@
 <div class="row justify-content-center text-dark">
-    <div class="py-4 col-md-6 bg-light">
+    <div class="py-4 col-lg-4 bg-light">
         <form method="POST" action="../config/registration.php" class="needs-validation">
             <h2 class="text-center">Aggiungi un utente</h2>
-            <div class="form-group col-md was-validated">
+            <div class="form-group col-md">
                 <label for="inputNUsername">Username</label>
-                <input type="text" class="form-control" id="inputNUsername" name="inputNUsername" placeholder="Username" autocomplete="off" required>
-                <div class="invalid-feedback">Inserisci un username</div>
+                <input type="text" class="form-control" id="inputNUsername" name="inputNUsername" placeholder="Username" autocomplete="off" onblur="ExistUser()"required>
+                <div class="invalid-feedback">
+                    Inserisci un username valido
+                </div>
             </div>
             <div class="form-group col-md was-validated">
                 <label for="inputNPassword">Password</label>

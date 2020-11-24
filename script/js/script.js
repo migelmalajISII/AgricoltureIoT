@@ -10,15 +10,26 @@ function ShowPassword() {
     });
 }
 
-function IsLogged() {
+function ExistUser() {
     let value = $('#inputNUsername').val();
-    $.ajax({
-            type: "GET",
-            url: "http://localhost:8000/Agriculture_IoT/config/registration.php?code=554&user=" + value,
-        })
-        .done(function(response) {
-            console.log(response);
-        });
+    if (value == '') {
+        $('#inputNUsername').removeClass("is-valid is-invalid").addClass("is-invalid");
+        $('#bttSend').prop("disabled", true);
+    } else {
+        $.ajax({
+                type: "GET",
+                url: "..//config/registration.php?code=554&user=" + value,
+            })
+            .done(function(response) {
+                if (response == 'true') {
+                    $('#inputNUsername').removeClass("is-valid is-invalid").addClass("is-valid");
+                    $('#bttSend').prop("disabled", false);
+                } else {
+                    $('#inputNUsername').removeClass("is-valid is-invalid").addClass("is-invalid");
+                    $('#bttSend').prop("disabled", true);
+                }
+            });
+    }
 }
 
 function CheckPassword() {

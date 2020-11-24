@@ -9,7 +9,7 @@
                 <a class="nav-link" href="./admin.php">Administrator</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../public/registration.php">Registratione</a>
+                <a class="nav-link" href="../public/registration.php">Registrazione</a>
             </li>
         </ul>
         <?php if(isset($_SESSION['islogged'])) { ?>
@@ -21,7 +21,7 @@
                             <?=$_SESSION['username']?>!</h4>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="../config/generateapi.php">Hai dimenticato la tua API Key? Generane una nuova!</a>
+                        <a class="dropdown-item" href="../config/generateapi.php">Hai dimenticato la tua API Key? Ottienine una nuova!</a>
                     </div>
                 </div>
 

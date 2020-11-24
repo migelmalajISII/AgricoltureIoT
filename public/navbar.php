@@ -40,4 +40,4 @@
     </div>
     <?php } ?>
 </nav>
-<div class="container">
+<div class="container-fluid px-5">
