@@ -11,10 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role']=$result['ruolo'];
         $_SESSION['islogged']=TRUE;
         header("Location: ../");
-        die();
-    }
-    else{
-        echo 'Non verificato';
+    } else{
+        header("Location: ../");
     }
 }
 ?>

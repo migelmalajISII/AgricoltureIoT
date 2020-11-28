@@ -11,9 +11,9 @@ $data=allSensor();
                 <button type="submit" class="btn btn-outline-success">Aggiungi</button>
             </form>
         </div>
-    </div>    
+    </div>
     <div class="scrollingTable text-center">
-        <table class="table table-striped table-dark" id="tblSensore">
+        <table class="table table-striped table-dark table-hover" id="tblSensore" style="margin-bottom:0">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -35,7 +35,7 @@ $data=allSensor();
                     $dataInstallazione=htmlentities($row['datainstallazione']);
                 ?>
                 <tr>
-                    <th scope="row"><?=$id?></th>
+                    <td scope="row"><a href="../admin/detail-sensor.php?idsensor=<?=$id?>"><?=$id?></a></td>
                     <td><?=$marca?></td>
                     <td><?=$modello?></td>
                     <td><?=$latitudine?></td>
@@ -59,6 +59,14 @@ $data=allSensor();
         </table>
     </div>
 </div>
-<?php
-echo('<script> sensoreScroll() </script>');
-?>
+<script> sensoreScroll() </script>
+<script>
+$(document).ready(function() {
+    $('#tblSensore').click(function() {
+        var href = $(this).find("a").attr("href");
+        if(href) {
+            window.location = href;
+        }
+    });
+});
+</script>

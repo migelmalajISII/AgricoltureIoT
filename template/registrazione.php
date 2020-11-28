@@ -44,8 +44,4 @@
         </form>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        ShowPassword();
-    });
-</script>
+<script>ShowPassword();</script>

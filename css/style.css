@@ -62,8 +62,24 @@ nav.background {
 }
 
 .scrollingTable {
-    width: min-content;
+    /*width: min-content;*/
     overflow-y: auto;
+}
+
+#tblSensore td:hover {
+    cursor: pointer;
+}
+
+#tblSensore td a:link,
+#tblSensore td a:visited {
+    color: white;
+}
+
+.chartDesign {
+    width: 100%;
+    height: 100%;
+    background: #222;
+    border: 1px solid #555652;
 }
 
 @media (max-width: 768px) {
