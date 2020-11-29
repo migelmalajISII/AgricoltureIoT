@@ -15,8 +15,8 @@ if(password_verify ($key,$result['token'])){
     $at=htmlentities($tablePOST['at']);
     $ah=htmlentities($tablePOST['ah']);
     $uv=htmlentities($tablePOST['uv']);
-    $dt=isset(htmlentities($tablePOST['dt']))?htmlentities($tablePOST['dt']):date("Y-m-d");
-    $hr=isset(htmlentities($tablePOST['hr']))?htmlentities($tablePOST['hr']):date("H:i:s");
+    $dt=isset($tablePOST['dt'])?$tablePOST['dt']:date("Y-m-d");
+    $hr=isset($tablePOST['hr'])?htmlentities($tablePOST['hr']):date("H:i:s");
     $idsensor=htmlentities($tablePOST['idsensore']);
     addDato($tt,$th,$at,$ah,$uv,$dt,$hr,$idsensor);
 }

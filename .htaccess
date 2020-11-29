@@ -2,5 +2,4 @@ RewriteEngine on
 RewriteRule ^$ /Agriculture_IoT/public/index.php [R]
 RewriteRule ^[\w]$ /Agriculture_IoT/public/index.php [R]
 RewriteRule ^admin/$ /Agriculture_IoT/admin/admin.php [R]
-RewriteRule ^api/([a-zA-Z]+)/apikey=([a-zA-Z]+)$ /Agriculture_IoT/api.php?user=$1&apikey=$2
 Options -Indexes
