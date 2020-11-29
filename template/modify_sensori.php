@@ -7,7 +7,7 @@ if(isset($_GET['sensori'])){
     $modello=$array['modello'];
     $latitudine=isset($array['latitudine'])?$array['latitudine']:NULL;
     $longitudine=isset($array['longitudine'])?$array['longitudine']:NULL;
-    $note=isset($array['note'])?$array['note']:-1;
+    $note=isset($array['note'])?$array['note']:NULL;
     $link="../script/sensor/change.php";
 }else{
     $id=NULL;
