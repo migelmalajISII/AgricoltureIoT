@@ -12,3 +12,24 @@
 
 ## WebSite Side
 1. Copiare il contenuto della cartella **Agriculture_IoT** nella root directory del nostro server web
+
+
+## Sensori Side
+1. Utilizzare il software SimulazioneSensori per simulare la presenza di sensori
+2. Tutte le richieste per inserire i dati dei sensori nel DB devono essere inviate al seguente url:
+    http://localhost:8000/Agriculture_IoT/api.php?user=NOMEUTENTE&apikey=TOKEN
+3. Tutti i sensori dovranno spedire un JSON con la seguente sintassi, salvo il mancato inserimento dei dati:
+    {tt:value,th:value,at:value,ah:value,uv:value,idsensore:value}
+    Dove:
+    -tt-> Temperatura del Terreno
+    -th-> Umidità del Terreno
+    -at-> Temperatura dell'Aria
+    -uh-> Umidità dell'Aria
+    -uv-> Indice UV
+    -idsensore-> ID Univoco del sensore
+
+
+## Note Utenti:
+  Di default è stato creato un utente con privilegi di amministratore:
+   Nome Utente: administrator
+   Password: password
