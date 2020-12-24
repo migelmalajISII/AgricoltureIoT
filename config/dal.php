@@ -12,20 +12,26 @@ function connectDB(){
 
 function login($user){
     $mysqli=connectDB();
-    $query="SELECT * FROM utenti WHERE username='$user'";
-    $result = $mysqli->query($query);
+    $stmt=$mysqli->prepare("SELECT * FROM utenti WHERE username=?");
+    $stmt->bind_param('s',$user);
+    $stmt->execute();
+    $result=$stmt->get_result();
     $data = $result->fetch_array(MYSQLI_ASSOC);
     $result->free_result();
+    $stmt->close();
     $mysqli->close();
     return $data;
 }
 
 function existUsername($user){
     $mysqli=connectDB();
-    $query="SELECT `id` FROM `utenti` WHERE `username`='$user'";
-    $result = $mysqli->query($query);
+    $stmt=$mysqli->prepare("SELECT `id` FROM `utenti` WHERE `username`=?");
+    $stmt->bind_param('s',$user);
+    $stmt->execute();
+    $result=$stmt->get_result();
     $value = $result->num_rows;
     $result->free_result();
+    $stmt->close();
     $mysqli->close();
     return $value;
 }
@@ -35,30 +41,40 @@ function registration($user,$pass,$role){
     $pass_hash=password_hash($pass,PASSWORD_DEFAULT);
     $token=generate_string();
     $token_hash=password_hash($token,PASSWORD_DEFAULT);
-    $query="INSERT INTO `utenti` (`id`, `username`, `password`, `token`, `ruolo`) VALUES (NULL, '$user', '$pass_hash', '$token_hash', '$role')";
-    $mysqli->query($query);
+    $stmt=$mysqli->prepare("INSERT INTO `utenti` (`username`, `password`, `token`, `ruolo`) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param('ssss',$user,$pass_hash,$token_hash,$role);
+    $stmt->execute();
+    $result=$stmt->get_result();
+    $stmt->close();
     $mysqli->close();
-    return $token;
+    if($result==1)
+        return $token;
+    else
+        return "Error";
 }
 
 function newToken($id,$user){
     $mysqli=connectDB();
     $token=generate_string();
     $token_hash=password_hash($token,PASSWORD_DEFAULT);
-    $query= "UPDATE `utenti` SET `token`='$token_hash' WHERE `id`= $id AND `username`='$user'";
-    if($mysqli->query($query)==1){
+    $stmt=$mysqli->prepare("UPDATE `utenti` SET `token`=? WHERE `id`= ? AND `username`=?");
+    $stmt->bind_param('sis',$token_hash,$id,$user);
+    $stmt->execute();
+    if($stmt->get_result()==1){
+        $stmt->close();
         $mysqli->close();
         return $token;
     }
     else{
+        $stmt->close();
         $mysqli->close();
-        return "false";
+        return "Error";
     }
 }
 
 function generate_string(){
     $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $strength = 12;
+    $strength = 15;
     $permitted_chars_length = strlen($permitted_chars);
     $random_string = '';
     for($i = 0; $i < $strength; $i++) {
@@ -70,10 +86,13 @@ function generate_string(){
 
 function publicLoad($dataa){
     $mysqli=connectDB();
-    $query="SELECT `idsensore`, ROUND(AVG(`temperatura_t`),2) AS TT, ROUND(AVG(`umidita_t`),2) AS UT, ROUND(AVG(`temperatura_a`),2) AS TA, ROUND(AVG(`umidita_a`),2) AS UA, ROUND(AVG(`indiceuv`),2) AS UV FROM `dati` WHERE `data` ='$dataa' GROUP BY `idsensore`";
-    $result=$mysqli->query($query);
+    $stmt=$mysqli->prepare("SELECT `idsensore`, ROUND(AVG(`temperatura_t`),2) AS TT, ROUND(AVG(`umidita_t`),2) AS UT, ROUND(AVG(`temperatura_a`),2) AS TA, ROUND(AVG(`umidita_a`),2) AS UA, ROUND(AVG(`indiceuv`),2) AS UV FROM `dati` WHERE `data` = ? GROUP BY `idsensore`");
+    $stmt->bind_param('s',$dataa);
+    $stmt->execute();
+    $result=$stmt->get_result();
     $data = $result->fetch_all(MYSQLI_ASSOC);
     $result->free_result();
+    $stmt->close();
     $mysqli->close();
     return $data;
 }
@@ -88,7 +107,7 @@ function allSensor(){
     return $data;
 }
 
-function getSensorByID($id){
+function getSensorByID($id){ //SQL injection verificata prima
     $mysqli=connectDB();
     $query="SELECT * FROM `sensori` WHERE `idsensore`=$id";
     $result=$mysqli->query($query);
@@ -98,7 +117,29 @@ function getSensorByID($id){
     return $data;
 }
 
-function deleteSensor($id){
+function addSensor($mr,$md,$lt,$lg,$txt){
+    $mysqli=connectDB();
+    $stmt=$mysqli->prepare("INSERT INTO `sensori`(`marca`, `modello`, `latitudine`, `longitudine`, `note`) VALUES (?,?,?,?,?)");
+    $stmt->bind_param('ssdds',$mr,$md,$lt,$lg,$txt);
+    $stmt->execute();
+    $result=$stmt->get_result();
+    $stmt->close();
+    $mysqli->close();
+    return $result;
+}
+
+function updateSensor($id,$mr,$md,$lt,$lg,$txt){
+    $mysqli=connectDB();
+    $stmt=$mysqli->prepare("UPDATE `sensori` SET `marca`=?,`modello`=?,`latitudine`=?,`longitudine`=?,`note`=? WHERE `idsensore`=?");
+    $stmt->bind_param('ssddsi',$mr,$md,$lt,$lg,$txt,$id);
+    $stmt->execute();
+    $result=$stmt->get_result();
+    $stmt->close();
+    $mysqli->close();
+    return $result;
+}
+
+function deleteSensor($id){ //SQL injection verificata prima
     $mysqli=connectDB();
     $query="DELETE FROM `sensori` WHERE `idsensore`=$id";
     $result=$mysqli->query($query);
@@ -106,28 +147,18 @@ function deleteSensor($id){
     return $result;
 }
 
-function addSensor($mr,$md,$lt,$lg,$txt){
-    $mysqli=connectDB();
-    $query="INSERT INTO `sensori`(`marca`, `modello`, `latitudine`, `longitudine`, `note`) VALUES ('$mr','$md','$lt','$lg','$txt')";
-    $mysqli->query($query);
-    $mysqli->close();
-}
-
-function updateSensor($id,$mr,$md,$lt,$lg,$txt){
-    $mysqli=connectDB();
-    $query="UPDATE `sensori` SET `marca`='$mr',`modello`='$md',`latitudine`='$lt',`longitudine`='$lg',`note`='$txt' WHERE `idsensore`=$id";
-    $mysqli->query($query);
-    $mysqli->close();
-}
-
 function addDato($tt,$th,$at,$ah,$uv,$dt,$hr,$idsensor){
     $mysqli=connectDB();
-    $query="INSERT INTO `dati`(`temperatura_t`, `umidita_t`, `temperatura_a`, `umidita_a`, `indiceuv`, `data`, `ora`, `idsensore`) VALUES ('$tt','$th','$at','$ah','$uv','$dt','$hr',$idsensor)";
-    $mysqli->query($query);
+    $stmt=$mysqli->prepare("INSERT INTO `dati`(`temperatura_t`, `umidita_t`, `temperatura_a`, `umidita_a`, `indiceuv`, `data`, `ora`, `idsensore`) VALUES (?,?,?,?,?,?,?,?)");
+    $stmt->bind_param('ddddissi',$tt,$th,$at,$ah,$uv,$dt,$hr,$idsensor);
+    $stmt->execute();
+    $result=$stmt->get_result();
+    $stmt->close();
     $mysqli->close();
+    return $result;
 }
 
-function getDatibyID($idsensor){
+function getDatibyID($idsensor){ //SQL injection verificata prima
     $mysqli=connectDB();
     $query = "SELECT `temperatura_t`,`umidita_t`,`temperatura_a`,`umidita_a`,`indiceuv`, CONCAT(`data`,\" \",`ora`) AS Inserimento FROM `dati` WHERE `idsensore`=$idsensor ORDER BY `data`DESC, `ora` DESC";
     $result=$mysqli->query($query);
@@ -137,36 +168,35 @@ function getDatibyID($idsensor){
     return $data;
 }
 
-function getMinDatibyID($idsensor){
+function getMinDatibyID($idsensor){ //SQL injection verificata prima
     $mysqli=connectDB();
-    $query = "SELECT MIN(`temperatura_t`) AS TT,  MIN(`umidita_t`) AS UT,  MIN(`temperatura_a`) AS TA,  MIN(`umidita_a`) AS UA,  MIN(`indiceuv`) AS UV, `data` FROM `dati` WHERE `idsensore`=$idsensor GROUP BY `data`";
+    $query = "SELECT MIN(`temperatura_t`) AS TT, MIN(`umidita_t`) AS UT, MIN(`temperatura_a`) AS TA, MIN(`umidita_a`) AS UA, MIN(`indiceuv`) AS UV, `data` FROM `dati` WHERE `idsensore`=$idsensor GROUP BY `data`";
     $result=$mysqli->query($query); 
     $mysqli->close();
     return $result;
 }
 
-function getMaxDatibyID($idsensor){
+function getMaxDatibyID($idsensor){ //SQL injection verificata prima
     $mysqli=connectDB();
-    $query = "SELECT MAX(`temperatura_t`) AS TT,  MAX(`umidita_t`) AS UT,  MAX(`temperatura_a`) AS TA,  MAX(`umidita_a`) AS UA,  MAX(`indiceuv`) AS UV, `data` FROM `dati` WHERE `idsensore`=$idsensor GROUP BY `data`";
+    $query = "SELECT MAX(`temperatura_t`) AS TT, MAX(`umidita_t`) AS UT, MAX(`temperatura_a`) AS TA, MAX(`umidita_a`) AS UA, MAX(`indiceuv`) AS UV, `data` FROM `dati` WHERE `idsensore`=$idsensor GROUP BY `data`";
     $result=$mysqli->query($query); 
     $mysqli->close();
     return $result;
 }
 
-function getAvgDatibyID($idsensor){
+function getAvgDatibyID($idsensor){ //SQL injection verificata prima
     $mysqli=connectDB();
-    $query = "SELECT ROUND(AVG(`temperatura_t`),2) AS TT,  ROUND(AVG(`umidita_t`),2) AS UT,  ROUND(AVG(`temperatura_a`),2) AS TA,  ROUND(AVG(`umidita_a`),2) AS UA,  ROUND(AVG(`indiceuv`),2) AS UV, `data` FROM `dati` WHERE `idsensore`=$idsensor GROUP BY `data`";
+    $query = "SELECT ROUND(AVG(`temperatura_t`),2) AS TT, ROUND(AVG(`umidita_t`),2) AS UT, ROUND(AVG(`temperatura_a`),2) AS TA, ROUND(AVG(`umidita_a`),2) AS UA, ROUND(AVG(`indiceuv`),2) AS UV, `data` FROM `dati` WHERE `idsensore`=$idsensor GROUP BY `data`";
     $result=$mysqli->query($query); 
     $mysqli->close();
     return $result;
 }
 
-function getDevDatibyID($idsensor){
+function getDevDatibyID($idsensor){ //SQL injection verificata prima
     $mysqli=connectDB();
-    $query = "SELECT ROUND(STD(`temperatura_t`),2) AS TT,  ROUND(STD(`umidita_t`),2) AS UT,  ROUND(STD(`temperatura_a`),2) AS TA,  ROUND(STD(`umidita_a`),2) AS UA,  ROUND(STD(`indiceuv`),2) AS UV, `data` FROM `dati` WHERE `idsensore`=$idsensor GROUP BY `data`";
+    $query = "SELECT ROUND(STD(`temperatura_t`),2) AS TT, ROUND(STD(`umidita_t`),2) AS UT, ROUND(STD(`temperatura_a`),2) AS TA, ROUND(STD(`umidita_a`),2) AS UA, ROUND(STD(`indiceuv`),2) AS UV, `data` FROM `dati` WHERE `idsensore`=$idsensor GROUP BY `data`";
     $result=$mysqli->query($query); 
     $mysqli->close();
     return $result;
 }
-
 ?>

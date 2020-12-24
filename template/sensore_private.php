@@ -1,5 +1,5 @@
 <?php
-$idsensor=isset($_GET['idsensor']) ? $_GET['idsensor'] : header("Location:../");
+$idsensor=isset($_GET['idsensor']) and is_int($_GET['idsensor']) ? intval($_GET['idsensor']) : header("Location: ../error.php");
 $data=getDatibyID($idsensor);
 ?>
 <div class="row my-5">

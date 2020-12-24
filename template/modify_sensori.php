@@ -1,6 +1,6 @@
 <?php
-if(isset($_GET['sensori'])){
-    $id=$_GET['sensori'];
+if(isset($_GET['sensori']) and is_int($_GET['sensori'])){
+    $id=intval($_GET['sensori']);
     $array=getSensorByID($id);
     $titoloPagina="Modifica le informazioni di un sensore";
     $marca=$array['marca'];

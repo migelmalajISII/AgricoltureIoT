@@ -85,8 +85,10 @@ function LeggiDati(nomeChart, idsensor) {
             url: "../config/requestChart.php?code=695&id=" + idsensor + "&request=" + nomeChart,
         })
         .done(function(response) {
-            let arr = response.split(";");
-            setChart(nomeChart, arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
+            if (response != "Error") {
+                let arr = response.split(";");
+                setChart(nomeChart, arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
+            }
         });
 }
 

@@ -43,6 +43,6 @@ if(isset($_GET['request']) and isset($_GET['id']) and $_GET['code']=="695"){
     $data6 = trim($data6,",");
     echo ($data1.";".$data2.";".$data3.";".$data4.";".$data5.";".$data6);
 } else {
-    echo 'Errore';
+    echo 'Error';
 }
 ?>
