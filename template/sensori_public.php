@@ -1,4 +1,4 @@
-<div class="col-lg-4 mt-3">
+<div class="col-lg-4 mt-3" id="<?=$nomeSensore;?>">
     <div class="riquadroSensori">
         <h5 class="card-title">
             <?=$nomeSensore;?>

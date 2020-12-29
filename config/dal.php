@@ -86,7 +86,12 @@ function generate_string(){
 
 function publicLoad($dataa){
     $mysqli=connectDB();
-    $stmt=$mysqli->prepare("SELECT `idsensore`, ROUND(AVG(`temperatura_t`),2) AS TT, ROUND(AVG(`umidita_t`),2) AS UT, ROUND(AVG(`temperatura_a`),2) AS TA, ROUND(AVG(`umidita_a`),2) AS UA, ROUND(AVG(`indiceuv`),2) AS UV FROM `dati` WHERE `data` = ? GROUP BY `idsensore`");
+
+    $stmt=$mysqli->prepare("SELECT D.`idsensore`, S.marca, S.modello, S.latitudine, S.longitudine, ROUND(AVG(`temperatura_t`),2) AS TT, 
+    ROUND(AVG(`umidita_t`),2) AS UT, ROUND(AVG(`temperatura_a`),2) AS TA, ROUND(AVG(`umidita_a`),2) AS UA, 
+    ROUND(AVG(`indiceuv`),2) AS UV FROM `dati` AS D INNER JOIN `sensori` AS S ON D.`idsensore`=S.`idsensore` 
+    WHERE `data` = ? GROUP BY D.`idsensore` ORDER BY D.`idsensore`");
+
     $stmt->bind_param('s',$dataa);
     $stmt->execute();
     $result=$stmt->get_result();
