@@ -7,7 +7,7 @@ $data=allSensor();
             <h5 class="card-title">Sensori</h5>
         </div>
         <div class="col-3 text-right pr-5">
-            <form action="../admin/sensor.php" method="GET">
+            <form action="/admin/create">
                 <button type="submit" class="btn btn-outline-success">Aggiungi</button>
             </form>
         </div>
@@ -35,20 +35,19 @@ $data=allSensor();
                     $dataInstallazione=htmlentities($row['datainstallazione']);
                 ?>
                 <tr>
-                    <td scope="row"><a href="../admin/detail-sensor.php?idsensor=<?=$id?>"><?=$id?></a></td>
+                    <td scope="row"><a href="/admin/view/<?=$id?>"><?=$id?></a></td>
                     <td><?=$marca?></td>
                     <td><?=$modello?></td>
                     <td><?=$latitudine?></td>
                     <td><?=$longitudine?></td>
                     <td><?=$dataInstallazione?></td>
                     <td>
-                        <form method="GET" action="../admin/sensor.php">
-                            <input type="hidden" name="sensori" value="<?=$id?>">
+                        <form action="/admin/modify/<?=$id?>">
                             <button type="submit" class="btn text-light"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                         </form>
                     </td>
                     <td>
-                        <form method="POST" action="../script/sensor/delete.php">
+                        <form method="POST" action="/script/sensor/delete.php">
                             <input type="hidden" name="sensori" value="<?=$id?>">
                             <button type="button" class="btn text-light" onclick="confirm('Sei sicuro di voler eliminare questo elemento?') ? submit(): false"><i class="fa fa-trash-o" aria-hidden="true" ></i></button>
                         </form>

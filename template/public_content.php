@@ -1,12 +1,15 @@
 <?php
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
-    $dataa=isset($_GET['dtpicker'])? $_GET['dtpicker']:date("Y-m-d");
+    $dataa;
+    if(isset($_GET['dtpicker'])) {
+        $dataa = date_parse($_GET['dtpicker'])["warning_count"] > 0 ? date("Y-m-d"): $_GET['dtpicker'];
+    } else $dataa = date("Y-m-d");
 }
 ?>
     <div class="mt-3">
         <h3 class="text-center">Dati medi del giorno
-            <form class=" col-lg-2 d-inline-block" method="GET" action='../public/index.php'>
-                <input type="date" class="form-control text-center" name="dtpicker" id="dtpicker" value="<?=$dataa?>" onchange="submit()">
+            <form class=" col-lg-2 d-inline-block">
+                <input type="date" class="form-control text-center" name="dtpicker" id="dtpicker" value="<?=$dataa?>" onchange="location.href = '../'+document.getElementById('dtpicker').value;">
             </form>
         </h3>
     </div>

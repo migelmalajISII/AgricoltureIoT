@@ -14,7 +14,7 @@
                 <div class="input-group">
                     <input type="password" class="form-control" id="inputNPassword" name="inputNPassword" placeholder="Password" autocomplete="off" oninput="CheckPassword()" required>
                     <div class="input-group-append">
-                        <span class="input-group-text"><i  toggle="#inputNPassword" class="fa fa-fw fa-eye toggle-password"></i></span>
+                        <span class="input-group-text"><i toggle="#inputNPassword" class="fa fa-fw fa-eye toggle-password"></i></span>
                     </div>
                     <div class="invalid-feedback">
                         Inserire una password

@@ -22,10 +22,10 @@ else{
             $value=htmlentities($_GET['user']);
             echo existUsername($value);
         }else{
-            header("Location:../");
+            echo 'NULL';
         }
     }else{
-        header("Location:../");
+        echo 'NULL';
     }
 }
 ?>

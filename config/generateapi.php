@@ -17,6 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     include("../public/footer.php");
 }
 else{
-    header("Location:../");
+    header("Location: /");
 }
 ?>

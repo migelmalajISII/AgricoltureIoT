@@ -10,9 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username']=$result['username'];
         $_SESSION['role']=$result['ruolo'];
         $_SESSION['islogged']=TRUE;
-        header("Location: ../");
+        header("Location: /");
     } else{
-        header("Location: ../");
+        header("Location: /");
     }
 }
 ?>

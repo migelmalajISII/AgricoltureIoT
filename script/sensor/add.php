@@ -8,5 +8,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $txt=isset($_POST["txtnote"])?htmlentities($_POST["txtnote"]):"NULL";
     addSensor($mr,$md,$lt,$lg,$txt);
 }
-header('Location: ../../admin/admin.php');
+header('Location: /admin');
 ?>

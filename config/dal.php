@@ -44,10 +44,10 @@ function registration($user,$pass,$role){
     $stmt=$mysqli->prepare("INSERT INTO `utenti` (`username`, `password`, `token`, `ruolo`) VALUES (?, ?, ?, ?)");
     $stmt->bind_param('ssss',$user,$pass_hash,$token_hash,$role);
     $stmt->execute();
-    $result=$stmt->get_result();
+    $result=$stmt->error;
     $stmt->close();
     $mysqli->close();
-    if($result==1)
+    if($result=="")
         return $token;
     else
         return "Error";
@@ -116,7 +116,11 @@ function getSensorByID($id){ //SQL injection verificata prima
     $mysqli=connectDB();
     $query="SELECT * FROM `sensori` WHERE `idsensore`=$id";
     $result=$mysqli->query($query);
-    $data = $result->fetch_array(MYSQLI_ASSOC);
+    if($result->num_rows>0){ 
+        $data = $result->fetch_array(MYSQLI_ASSOC);
+    }else{
+        $data['latitudine']="Error";
+    }
     $result->free_result();
     $mysqli->close();
     return $data;

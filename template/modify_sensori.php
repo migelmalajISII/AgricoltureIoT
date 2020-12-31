@@ -2,13 +2,17 @@
 if(isset($_GET['sensori'])){
     $id=intval($_GET['sensori']);
     $array=getSensorByID($id);
-    $titoloPagina="Modifica le informazioni di un sensore";
-    $marca=$array['marca'];
-    $modello=$array['modello'];
-    $latitudine=isset($array['latitudine'])?$array['latitudine']:NULL;
-    $longitudine=isset($array['longitudine'])?$array['longitudine']:NULL;
-    $note=isset($array['note'])?$array['note']:NULL;
-    $link="../script/sensor/change.php";
+    if($array['latitudine']!="Error"){
+        $titoloPagina="Modifica le informazioni di un sensore";
+        $marca=$array['marca'];
+        $modello=$array['modello'];
+        $latitudine=isset($array['latitudine'])?$array['latitudine']:NULL;
+        $longitudine=isset($array['longitudine'])?$array['longitudine']:NULL;
+        $note=isset($array['note'])?$array['note']:NULL;
+        $link="/script/sensor/change.php";
+    }else{
+        echo "<script type='text/javascript'>alert('ID non valido, Reindirizzamento in corso...'); window.location = '/admin/create'</script>";
+    }
 }else{
     $id=NULL;
     $titoloPagina="Aggiungi un nuovo sensore";
@@ -17,7 +21,7 @@ if(isset($_GET['sensori'])){
     $latitudine=NULL;
     $longitudine=NULL;
     $note=NULL;
-    $link="../script/sensor/add.php";
+    $link="/script/sensor/add.php";
 }
 ?>
 <div class="row justify-content-center text-dark">
@@ -52,7 +56,7 @@ if(isset($_GET['sensori'])){
             </div>
             <input type="hidden" name="idchange" value="<?=$id?>">
             <button type="submit" class="btn btn-success">Salva</button>
-            <button type="button" class="btn btn-outline-primary" onclick="window.location='../admin/admin.php';">Annulla</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='/admin';">Annulla</button>
         </form>
     </div>
 </div>

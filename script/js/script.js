@@ -18,7 +18,7 @@ function ExistUser() {
     } else {
         $.ajax({
                 type: "GET",
-                url: "..//config/registration.php?code=554&user=" + value,
+                url: "/config/registration.php?code=554&user=" + value,
             })
             .done(function(response) {
                 if (response == 0) {
@@ -82,7 +82,7 @@ function datoScroll() {
 function LeggiDati(nomeChart, idsensor) {
     $.ajax({
             type: "GET",
-            url: "../config/requestChart.php?code=695&id=" + idsensor + "&request=" + nomeChart,
+            url: "/config/requestChart.php?code=695&id=" + idsensor + "&request=" + nomeChart,
         })
         .done(function(response) {
             if (response != "Error") {

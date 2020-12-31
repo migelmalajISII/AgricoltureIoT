@@ -1,5 +1,5 @@
 <?php
-require("./dal.php");
+require("dal.php");
 if(isset($_GET['request']) and isset($_GET['id']) and $_GET['code']=="695"){
     $value=$_GET['request'];
     $idsensor=$_GET['id'];
