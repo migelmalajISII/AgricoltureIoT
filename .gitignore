@@ -2,4 +2,5 @@ _Informazioni/*
 _Documentazione/*
 _Presentazione/*
 _Consegnato/*
+_Deploy/*
 *.gitignore
