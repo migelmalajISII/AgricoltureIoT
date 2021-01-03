@@ -11,8 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo "<h4 class='confirm-registration'>La tua API key è: $token</h4>";
     }
     else{
-        echo "<h2 class='confirm-registration'>Errore!</h2>";
-        echo "<h4 class='confirm-registration'>Qualcosa è andato storto. Riprova più tardi!</h4>";
+        header("Location: /error");
     }
     include("../public/footer.php");
 }
