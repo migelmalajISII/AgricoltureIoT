@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
                 ?>
 
             L.marker([<?=$latitudine?>, <?=$longitudine?>]).addTo(map)
-                .bindPopup('Nome Identificativo: <?=$nomeSensore?><br>Marca: <?=$marca?><br>Modello: <?=$modello?><br>' +
+                .bindPopup('<a class="text-center font-weight-bold" href="admin/view/<?=htmlentities($row['idsensore'])?>"><?=$nomeSensore?></a><br>Marca: <?=$marca?><br>Modello: <?=$modello?><br>' +
                     'Temperatura Terreno: <?=$temperatura_t?><br>Umidità Terreno: <?=$umidita_t?><br>Temperatura Aria: <?=$temperatura_a?><br>' +
                     'Umidità Aria: <?=$umidita_a?><br>Indice UV: <?=$indiceUV?>');
             <?php

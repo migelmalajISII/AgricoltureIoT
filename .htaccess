@@ -71,8 +71,15 @@ RewriteRule ^admin/view/([\d]+)$ /admin/detail-sensor.php?idsensor=$1 [L]
 ##Speciali
 RewriteRule ^login$ /config/login.php [L]
 RewriteRule ^logout$ /config/logout.php [L]
-RewriteRule ^admin/new-key$ /config/generateapi.php[L]
+RewriteRule ^admin/new-key$ /config/generateapi.php [L]
 RewriteRule ^error$ /public/error.php
 RewriteRule ^api/user=([\w]+)&key=([\w]+)$ /api.php?user=$1&apikey=$2 [L,NE]
+
+##Errors pages
+ErrorDocument 400 /public/error.php
+ErrorDocument 401 /public/error.php
+ErrorDocument 403 /public/error.php
+ErrorDocument 404 /public/error404.php
+ErrorDocument 500 /public/error.php
 
 Options -Indexes

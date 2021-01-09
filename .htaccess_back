@@ -1,5 +1,0 @@
-RewriteEngine on
-RewriteRule ^$ /public/index.php
-RewriteRule ^[\w]$ /public/index.php
-RewriteRule ^admin/$ /admin/admin.php
-Options -Indexes

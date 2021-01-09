@@ -33,3 +33,4 @@
   Di default è stato creato un utente con privilegi di amministratore:<br>
    Nome Utente: administrator<br>
    Password: password<br>
+   Token: 4JkGnxsuywdzmgk<br>

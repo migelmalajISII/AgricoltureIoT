@@ -60,16 +60,13 @@ function newToken($id,$user){
     $stmt=$mysqli->prepare("UPDATE `utenti` SET `token`=? WHERE `id`= ? AND `username`=?");
     $stmt->bind_param('sis',$token_hash,$id,$user);
     $stmt->execute();
-    if($stmt->get_result()==1){
-        $stmt->close();
-        $mysqli->close();
+    $result=$stmt->error;
+    $stmt->close();
+    $mysqli->close();
+    if($result=="")
         return $token;
-    }
-    else{
-        $stmt->close();
-        $mysqli->close();
+    else
         return "Error";
-    }
 }
 
 function generate_string(){

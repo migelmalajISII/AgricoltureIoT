@@ -66,8 +66,9 @@ nav.background {
     overflow-y: auto;
 }
 
-#tblSensore td:hover {
+#tblSensore.point {
     cursor: pointer;
+    text-decoration: underline;
 }
 
 #tblSensore td a:link,

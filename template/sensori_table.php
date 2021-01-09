@@ -35,7 +35,7 @@ $data=allSensor();
                     $dataInstallazione=htmlentities($row['datainstallazione']);
                 ?>
                 <tr>
-                    <td scope="row"><a href="/admin/view/<?=$id?>"><?=$id?></a></td>
+                    <td class="font-weight-bold point" scope="row"><a href="/admin/view/<?=$id?>"><?=$id?></a></td>
                     <td><?=$marca?></td>
                     <td><?=$modello?></td>
                     <td><?=$latitudine?></td>
@@ -59,13 +59,3 @@ $data=allSensor();
     </div>
 </div>
 <script> sensoreScroll() </script>
-<script>
-$(document).ready(function() {
-    $('#tblSensore').click(function() {
-        var href = $(this).find("a").attr("href");
-        if(href) {
-            window.location = href;
-        }
-    });
-});
-</script>
