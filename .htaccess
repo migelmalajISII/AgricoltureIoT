@@ -16,6 +16,15 @@ Allow from ::1
 AddHandler cgi-script .pl .cgi
 Options +ExecCGI +FollowSymLinks
 
+# disable the server signature
+ServerSignature Off
+
+# set the server timezone
+SetEnv TZ Europe/Rome
+
+# set the default language
+DefaultLanguage it
+
 # BEGIN Expire headers
 <ifModule mod_expires.c>
 ExpiresActive On
@@ -28,8 +37,8 @@ ExpiresByType text/css "max-age=86400"
 ExpiresByType text/javascript "max-age=86400"
 ExpiresByType application/javascript "max-age=86400"
 ExpiresByType application/x-javascript "max-age=86400"
-ExpiresByType text/html "max-age=3600"
-ExpiresByType application/xhtml+xml "max-age=3600"
+ExpiresByType text/html "max-age=300"
+ExpiresByType application/xhtml+xml "max-age=300"
 ExpiresDefault "access 1 month"
 </ifModule>
 # END Expire headers
