@@ -17,7 +17,7 @@
 ## Sensori Side
 1. Utilizzare il software SimulazioneSensori per simulare la presenza di sensori
 2. Tutte le richieste per inserire i dati dei sensori nel DB devono essere inviate al seguente url:<br>
-    http://localhost:8000/Agriculture_IoT/api.php?user=NOMEUTENTE&apikey=TOKEN
+    http://localhost:8000/api/user=NOMEUTENTE&key=TOKEN
 3. Tutti i sensori dovranno spedire un JSON con la seguente sintassi, salvo il mancato inserimento dei dati:<br>
     {tt:value,th:value,at:value,ah:value,uv:value,idsensore:value}<br>
     Dove:<br>

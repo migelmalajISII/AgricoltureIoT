@@ -73,7 +73,7 @@ RewriteRule ^login$ /config/login.php [L]
 RewriteRule ^logout$ /config/logout.php [L]
 RewriteRule ^admin/new-key$ /config/generateapi.php [L]
 RewriteRule ^error$ /public/error.php
-RewriteRule ^api/user=([\w]+)&key=([\w]+)$ /api.php?user=$1&apikey=$2 [L,NE]
+RewriteRule ^api/username=([\w]+)&key=([\w]+)$ /api.php?username=$1&key=$2 [L,NE]
 
 ##Errors pages
 ErrorDocument 400 /public/error.php

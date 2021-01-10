@@ -19,7 +19,7 @@ if(password_verify($key,$result['token'])){
     $hr=isset($tablePOST['hr'])?htmlentities($tablePOST['hr']):date("H:i:s");
     $idsensor=htmlentities($tablePOST['idsensore']);
     $result=addDato($tt,$th,$at,$ah,$uv,$dt,$hr,$idsensor);
-    if($result==false)
+    if($result!=false)
         echo(json_encode(array('ok' => 'false','status'=>'true', 'code'=>901)));
     else
         echo(json_encode(array('ok' => 'true')));
